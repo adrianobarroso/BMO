@@ -80,7 +80,7 @@ v = load('/home/hp/Dropbox/pnboia/cfsr/vCFSR_RioGrande_200912.txt');
 
 %retira dias repetidos
 [time,ia,ic] = unique(time);
-time = time(1:end-1)
+time = time(1:end-1);
 u = u(ia(1:end-1));
 v = v(ia(1:end-1));
  

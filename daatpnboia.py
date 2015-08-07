@@ -298,8 +298,8 @@ for ik in range(len(listap)):
     etax = dados[0:1024,3]
 
     co = eta
-    dc = etay
-    dd = etax
+    dc = etax
+    dd = etay
 
     ano = int(data[0])
     mes = int(data[1])
