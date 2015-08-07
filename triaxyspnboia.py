@@ -88,11 +88,11 @@ tic = time.clock()
 
 #localizacao (habilite um para processar)
 
-#local = 'Recife/PE' # relatorio
-#local1 = 'recife' #nome do arquivo salvo
-#latlon = '-8.149 / -34.56' #relatorio
-#idargos = '69154'
-#idwmo = '31052'
+local = 'Recife/PE' # relatorio
+local1 = 'recife' #nome do arquivo salvo
+latlon = '-8.149 / -34.56' #relatorio
+idargos = '69154'
+idwmo = '31052'
 
 # local = 'Santos/SP'
 # local1 = 'santos'
@@ -100,17 +100,17 @@ tic = time.clock()
 # idargos = '69151'
 # idwmo = '31051'
 
-#local = 'Florianpolis/SC'
-#local1 = 'florianopolis'
-#latlon = '-28.50000 / -47.36667'
-#idargos = '69150'
-#idwmo = '31374'
+# local = 'Florianpolis/SC'
+# local1 = 'florianopolis'
+# latlon = '-28.50000 / -47.36667'
+# idargos = '69150'
+# idwmo = '31374'
 
-local = 'Rio Grande/RS'
-local1 = 'rio_grande'
-latlon = '-31.56667 / -49.86667'
-idargos = '69153'
-idwmo = '31053'
+#local = 'Rio Grande/RS'
+#local1 = 'rio_grande'
+#latlon = '-31.56667 / -49.86667'
+#idargos = '69153'
+#idwmo = '31053'
 
 # local = 'Porto Seguro/BA' #nao tem dados validos
 # local1 = 'porto_seguro'
@@ -228,8 +228,8 @@ def dados_hne(pathname,arq):
 lista = np.array(lista_hne(pathname))
 
 #numero dos arq para processar (modificar p0=0 e p1=len(lista) para todos)
-p0 = np.where(lista == z0)[0][0]
-p1 = np.where(lista == z1)[0][0]
+#p0 = np.where(lista == z0)[0][0]
+#p1 = np.where(lista == z1)[0][0]
 
 #processar todos os arquivos
 p0 = 0
