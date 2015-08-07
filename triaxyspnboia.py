@@ -120,15 +120,17 @@ idwmo = '31053'
 
 print 'Processamento em... ' + local
 #opcoes de plotagem (1=plota , 0=nao)
-plotfig = 1
-mdp = 1 #corrige a dmag na plotagem
-figtese = 1
+plotfig = 0
+figtese = 0
+
+#corrige a dmag na plotagem (1=sim , 0=nao)
+mdp = 1 
+
 
 #caminho onde estao os arquivos .HNE
 # pathname = os.environ['HOME'] + '/Dropbox/lioc/dados/pnboia/axys/ondas/preproc/' + local1 + '/hne_' + local1 + '/'
 pathname = os.environ['HOME'] + '/Dropbox/lioc/dados/pnboia/triaxys/' + local1 + '/HNE/'
-# pathname = '/media/lioc/Lioc1/dados/pnboia/axys/ondas/pre_proc/rio_grande/hne/'
-
+pathnameout = os.environ['HOME'] + '/Dropbox/pnboia/out/'
 
 
 #para processar todos os arquivos (comentao o p0 e p1 abaixo)
@@ -154,8 +156,6 @@ z1 = '200905090600.HNE'
 #evento de 13 de dez - maior hs
 #z0 = '200912130600.HNE' #maior hs
 #z1 = z0
-
-
 
 h = 200 #profundidade 
 nfft = 82 #numero de dados para a fft (p/ nlin=1312: 32gl;nfft=82, 16gl;nfft=164, 8gl;nfft=328)
@@ -230,6 +230,10 @@ lista = np.array(lista_hne(pathname))
 #numero dos arq para processar (modificar p0=0 e p1=len(lista) para todos)
 p0 = np.where(lista == z0)[0][0]
 p1 = np.where(lista == z1)[0][0]
+
+#processar todos os arquivos
+p0 = 0
+p1 = len(lista)
 
 
 # ================================================================================== #
@@ -591,23 +595,23 @@ if len(listac) > 0:
     flagp[:,15] = consisteproc.variab(tp2,1,20,flagp[:,15])
     flagp[:,16] = consisteproc.variab(dp2,1,360,flagp[:,16])
 
-    #Teste 3 - Valores consecutivos iguais (*verificar num de arquivos em 'listac')
-    # flagp[:,1] = consisteproc.iguais(hs,5,flagp[:,1])
-    # flagp[:,2] = consisteproc.iguais(h10,5,flagp[:,2])
-    # flagp[:,3] = consisteproc.iguais(hmax,5,flagp[:,3])
-    # flagp[:,4] = consisteproc.iguais(tmed,20,flagp[:,4])
-    # flagp[:,5] = consisteproc.iguais(thmax,20,flagp[:,5])
-    # flagp[:,6] = consisteproc.iguais(hm0,5,flagp[:,6])
-    # flagp[:,7] = consisteproc.iguais(tp,20,flagp[:,7])
-    # flagp[:,8] = consisteproc.iguais(dp,20,flagp[:,8])
-    # flagp[:,9] = consisteproc.iguais(sigma1p,20,flagp[:,9])
-    # flagp[:,10] = consisteproc.iguais(sigma2p,20,flagp[:,10])
-    # flagp[:,11] = consisteproc.iguais(hm01,5,flagp[:,11])
-    # flagp[:,12] = consisteproc.iguais(tp1,20,flagp[:,12])
-    # flagp[:,13] = consisteproc.iguais(dp1,20,flagp[:,13])
-    # flagp[:,14] = consisteproc.iguais(hm02,5,flagp[:,14])
-    # flagp[:,15] = consisteproc.iguais(tp2,20,flagp[:,15])
-    # flagp[:,16] = consisteproc.iguais(dp2,20,flagp[:,16])
+    #Teste 3 - Valores consecutivos iguais 
+    flagp[:,1] = consisteproc.iguais(hs,5,flagp[:,1])
+    flagp[:,2] = consisteproc.iguais(h10,5,flagp[:,2])
+    flagp[:,3] = consisteproc.iguais(hmax,5,flagp[:,3])
+    flagp[:,4] = consisteproc.iguais(tmed,20,flagp[:,4])
+    flagp[:,5] = consisteproc.iguais(thmax,20,flagp[:,5])
+    flagp[:,6] = consisteproc.iguais(hm0,5,flagp[:,6])
+    flagp[:,7] = consisteproc.iguais(tp,20,flagp[:,7])
+    flagp[:,8] = consisteproc.iguais(dp,20,flagp[:,8])
+    flagp[:,9] = consisteproc.iguais(sigma1p,20,flagp[:,9])
+    flagp[:,10] = consisteproc.iguais(sigma2p,20,flagp[:,10])
+    flagp[:,11] = consisteproc.iguais(hm01,5,flagp[:,11])
+    flagp[:,12] = consisteproc.iguais(tp1,20,flagp[:,12])
+    flagp[:,13] = consisteproc.iguais(dp1,20,flagp[:,13])
+    flagp[:,14] = consisteproc.iguais(hm02,5,flagp[:,14])
+    flagp[:,15] = consisteproc.iguais(tp2,20,flagp[:,15])
+    flagp[:,16] = consisteproc.iguais(dp2,20,flagp[:,16])
 
 
     # ================================================================================== #  
@@ -645,27 +649,28 @@ if len(listac) > 0:
     # ================================================================================== #  
     # Cria saida de dados com savetxt
 
-    # #parametros de ondas com cq apenas nos dados brutos
-    # np.savetxt('out/'+'triaxys_cb_'+str(gl)+'_'+local1+'.out',matondab,delimiter=',',fmt=['%i']+npa*['%.2f'],
-    #     header='data,hs,h10,hmax,tmed,thmax,hm0, tp, dp, sigma1p, sigma2p, hm01, tp1, dp1, hm02, tp2, dp2, gam, gam1, gam2')
+    #parametros de ondas com cq apenas nos dados brutos
+    np.savetxt(pathnameout+'/B'+str(idargos)+'_Wave_DB'+str(gl)+'.out',matondab,delimiter=',',fmt=['%i']+npa*['%.2f'],
+        header='data,hs,h10,hmax,tmed,thmax,hm0, tp, dp, sigma1p, sigma2p, hm01, tp1, dp1, hm02, tp2, dp2, gam, gam1, gam2')
 
-    # #parametros de ondas com cq nos dados brutos e processados
-    # np.savetxt('out/'+'triaxys_cp_'+str(gl)+'_'+local1+'.out',matondap,delimiter=',',fmt=['%i']+npa*['%.2f'],
-    #     header='data,hs,h10,hmax,tmed,thmax,hm0, tp, dp, sigma1p, sigma2p, hm01, tp1, dp1, hm02, tp2, dp2, gam, gam1, gam2')
+    #parametros de ondas com cq nos dados brutos e processados
+    np.savetxt(pathnameout+'/B'+str(idargos)+'_Wave_DP'+str(gl)+'.out',matondap,delimiter=',',fmt=['%i']+npa*['%.2f'],
+        header='data,hs,h10,hmax,tmed,thmax,hm0, tp, dp, sigma1p, sigma2p, hm01, tp1, dp1, hm02, tp2, dp2, gam, gam1, gam2')
 
-    # #flags aplicados nos dados brutos
-    # np.savetxt('out/'+'triaxys_flag_cb_'+str(gl)+'_'+local1+'.out',flagb,delimiter=',',fmt='%s',
-    #     header='date,eta,etax,etay')
+    #flags aplicados nos dados brutos
+    np.savetxt(pathnameout+'/B'+str(idargos)+'_Flags_DB'+str(gl)+'.out',flagb,delimiter=',',fmt='%s',
+        header='date,eta,etax,etay')
 
-    # #flags aplicados nos dados processados
-    # np.savetxt('out/'+'triaxys_flag_cp_'+str(gl)+'_'+local1+'.out',flagp,delimiter=',',fmt='%s',
-    #     header='data,hs,h10,hmax,tmed,thmax,hm0, tp, dp, sigma1p, sigma2p, hm01, tp1, dp1, hm02, tp2, dp2')
+    #flags aplicados nos dados processados
+    np.savetxt(pathnameout+'/B'+str(idargos)+'_Flags_DP'+str(gl)+'.out',flagp,delimiter=',',fmt='%s',
+        header='data,hs,h10,hmax,tmed,thmax,hm0, tp, dp, sigma1p, sigma2p, hm01, tp1, dp1, hm02, tp2, dp2')
 
-    # #lista de dados aprovados no cq bruto
-    # np.savetxt('out/'+'listacb_'+str(gl)+'-'+local1+'.out',listac,fmt='%s') #lista de dados aprovados no cq bruto
+    #lista de dados aprovados no cq bruto
+    #np.savetxt(pathnameout+'/B'+str(idargos)+'_DB'+str(gl)+'_LIOc.out',listac,fmt='%s') #lista de dados aprovados no cq bruto
 
-    # #lista de dados reprovados no cq bruto
-    # np.savetxt('out/'+'listaib_'+str(gl)+'-'+local1+'.out',listai,fmt='%s') #lista de dados reprovados no cq bruto
+    #lista de dados reprovados no cq bruto
+    #np.savetxt('out/'+'listaib_'+str(gl)+'-'+local1+'.out',listai,fmt='%s') #lista de dados reprovados no cq bruto
+
 
 
 else:
@@ -870,11 +875,11 @@ if figtese == 1:
         pl.xlabel(r'$Freque\^ncia\ (Hz)$',fontsize=17)
         pl.ylabel(r'$m^{2}/Hz$',fontsize=17)
 
-        pl.savefig('fig/serieespec.png', dpi=1200, facecolor='w', edgecolor='w',
-        orientation='portrait',format='png') 
+        # pl.savefig('fig/serieespec.png', dpi=1200, facecolor='w', edgecolor='w',
+        # orientation='portrait',format='png') 
 
-        pl.savefig('fig/serieespec.eps', dpi=1200, facecolor='w', edgecolor='w',
-        orientation='portrait',format='eps') 
+        # pl.savefig('fig/serieespec.eps', dpi=1200, facecolor='w', edgecolor='w',
+        # orientation='portrait',format='eps') 
 
 
 # ================================================================================== #  
