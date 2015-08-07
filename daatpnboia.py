@@ -216,8 +216,8 @@ energ = np.zeros((10,len(listap))) #Hs + 5 energias (uma por faixa), 4 picos (ma
 #que faz um circulo de 1 a -1
 ar, ai, br, bi = np.loadtxt('lyg2.txt', unpack=True)
 
-a23 = ar - 1j * ai
-a24 = br - 1j * bi
+a23 = ar + 1j * ai
+a24 = br + 1j * bi
 
 #mesmo circulo agora com 460 linhas (no matlab eh colunas)
 a26 = np.array( list(a23[310:360]) + list(a23) + list(a23[0:50]) )
@@ -298,8 +298,8 @@ for ik in range(len(listap)):
     etax = dados[0:1024,3]
 
     co = eta
-    dc = etax
-    dd = etay
+    dc = etay
+    dd = etax
 
     ano = int(data[0])
     mes = int(data[1])
