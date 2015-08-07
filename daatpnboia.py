@@ -165,8 +165,8 @@ lista = np.array(lista_hne(pathname))
 # p1 = 2600
 
 #escolhe a data inicial e final para ser processada (opcional, no 'p0' e 'p1')
-z0 = '200912010000.HNE'
-z1 = '200912312300.HNE'
+z0 = '200905010000.HNE'
+z1 = '200905312300.HNE'
 
 #z0 = '200907241900.HNE' #freakwave 1
 #z1 = z0
@@ -216,8 +216,8 @@ energ = np.zeros((10,len(listap))) #Hs + 5 energias (uma por faixa), 4 picos (ma
 #que faz um circulo de 1 a -1
 ar, ai, br, bi = np.loadtxt('lyg2.txt', unpack=True)
 
-a23 = ar + 1j * ai
-a24 = br + 1j * bi
+a23 = ar - 1j * ai
+a24 = br - 1j * bi
 
 #mesmo circulo agora com 460 linhas (no matlab eh colunas)
 a26 = np.array( list(a23[310:360]) + list(a23) + list(a23[0:50]) )
@@ -394,9 +394,9 @@ for ik in range(len(listap)):
 
     #cria faixas de frequencia (periodo) - pq nao usa faixa 4?
     #no matlab esta transposto
-    faixa1 = np.array([2,4]) # 21.3 - 16.0
-    faixa2 = np.array([4,8]) #12.8 - 8.0 
-    faixa3 = np.array(range(8,16)) #7.1 - 4
+    faixa1 = np.array([2,3,4]) # 21.3 - 16.0
+    faixa2 = np.array([5,6,7,8]) #12.8 - 8.0 
+    faixa3 = np.array(range(9,16)) #7.1 - 4
     faixa4 = np.array(range(16,len(f1))) #3.7 - 1.5
 
     #colocacao dos picos nas primeiras faixas para determinacao das wavelets
@@ -557,6 +557,8 @@ for ik in range(len(listap)):
         c0 = angle(c0) * 360 / (2 * pi)
         c0 = ceil(c0)
 
+        c0[pl.find(c0 < 0)] = c0[pl.find(c0 < 0)] + 360
+
         # c00 = find(c0<=0)         ##pra que utiliza??
         # c0[c00] = c0[c00] + 360   ## nenhuma variavel criada aqui esta sendo utilizada
         # pq = ceil(mean(c0)) ##nao utiliza
@@ -573,6 +575,9 @@ for ik in range(len(listap)):
         #direction calculated by Fourier techniques is used 
         #as a reference; the mem value is calculated in an interval
         #of 100 degrees around this value;
+
+        henr1p = []
+        henr2p = []
 
         for kl in range(m3+2):
 
@@ -594,6 +599,12 @@ for ik in range(len(listap)):
             p7 = a30[p3 + p5 - 1]
 
             tet2[0,kl] = grad1 * p7
+
+
+            #teste
+            henr1p.append(p3)
+            henr2p.append(tet2[0,kl] * 180/np.pi)
+
 
 
         tet2 = tet2.T
@@ -657,7 +668,7 @@ for ik in range(len(listap)):
         #g vai ser o comprimento do vetor
         g = len(fr2)
 
-        a15 = 0
+        #a15 = 0
         zm = 0.5
 
         #segments with values of the standard deviations smaller
@@ -680,7 +691,13 @@ for ik in range(len(listap)):
         #a15 = 90 + a15 - 21 (waverider de arraial)
         #usando o EtaEW e EtaNS ja esta descontado a dmag
 
-        a15 = 270 - a15 + dmag
+        #corrige a declinacao magnetica
+        a15 = a15 + dmag
+
+        #correcao de convencao
+        a15 = 270 - a15
+
+        #corrige valores menores e maiores que 360
         g = find(a15<0) ; a15[g] = a15[g] + 360
         g = find(a15>360) ; a15[g] = a15[g] - 350
 
@@ -777,3 +794,7 @@ pleds.pleds(espe1,dire1,ws1,wd1)
 
 
 print 'Tempo de execucao DAAT (s): ', texec
+
+
+henr1p = np.array(henr1p)
+henr2p = np.array(henr2p)

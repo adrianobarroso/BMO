@@ -38,6 +38,7 @@ c2=(a20-a21+1i*2*a12)./a25;
 c0=angle(c0)*360/(2*pi);
 c0=ceil(c0);
 
+
 c00=find(c0<=0);c0(c00)=c0(c00)+360;
 pq=ceil(mean(c0));                 % Novos Parente 
 pq=c03;                            %
@@ -47,6 +48,9 @@ p1=(c1-c2.*conj(c1))./(1-(abs(c1)).^2);
 p2=c2-c1.*p1;
 
 tet2=zeros(1,m3+2);
+
+%henr = zeros(1,m3+2);
+
 
 %in order to avoid the ambiguity caused by 2teta the main 
 %direction calculated by Fourier techniques is used 
@@ -58,6 +62,9 @@ for kl=1:m3+2,
     
    %arredonda para cima
    p3=ceil(c0(kl));
+   
+   
+   
    %p3=31;   
    d=(p3:p3+100);
 
@@ -71,12 +78,14 @@ for kl=1:m3+2,
    
    %main direction (mem) for each segment
    tet2(1,kl)=grad1*p7;
+   henr1(1,kl)=p3;
+   henr2(1,kl)=tet2(1,kl)*180/pi;
    
    %z1=1./z1;z1=z1/max(z1);
    %if iwq==5,memarq(d',kl)=z1;arqc0(kl)=c0(kl);end;
    
 end;
 
-
+   
 %spectrum for each segment
 sp2=a4';

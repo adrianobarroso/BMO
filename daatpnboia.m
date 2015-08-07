@@ -22,8 +22,6 @@
 % numero de pontos por registro = 1312
 % Dados: heave, dspNS, dspEW
 
-
-
 clear, clc, close all
 
 %% carrega arquivos
@@ -61,11 +59,11 @@ load lyg2.mat;
 
 %AXYS - RIO_GRANDE PNBOIA - Processamento em batelada
 %ondas
-pathname =     '/home/hp/Dropbox/lioc/dados/pnboia/triaxys/rio_grande/HNE/';
-pathnamelist = '/home/hp/Dropbox/lioc/dados/pnboia/triaxys/listas/';
+pathname =     '/home/hp/Dropbox/pnboia/dados/bruto/triaxys/rio_grande/HNE/';
+pathnamelist = '/home/hp/Dropbox/pnboia/dados/bruto/triaxys/listas/';
 
 %carrega listas da axys
-arq = load([pathnamelist,'list_RSDec09.txt']);
+arq = load([pathnamelist,'list_RSMay09.txt']);
 arqp = num2str(arq);
 mes = 12;
 ano = 2012;
@@ -195,6 +193,7 @@ ms = [];
 wavecos = zeros(64,34);
 wavesen = wavecos;
 
+
 for i = 1:length(mm)
     
     mn = mm(i); %wavelet atual
@@ -215,7 +214,7 @@ for i = 1:length(mm)
     %wavelets ??
     wavecos((1:mn)',i) = out1';
     wavesen((1:mn)',i) = out3';
-end;
+end
 
 %% processamento
 
@@ -223,8 +222,6 @@ kkl = 0;
 ik = length(arqp);
 
 for ik = 1:ik
-    
-    
     
     kkl = kkl + 1;
 
@@ -265,10 +262,10 @@ for ik = 1:ik
     ww55(1) = 4 * sqrt(sum(qq1) * df);
 
     %cria faixas de freq (periodo)
-    faixa1 = [2:6]'; % 32 - 10.6 s
-    faixa2 = [7:9]'; % 9.1 - 7.1 s
-    faixa3 = [10:15]'; % 6.4 - 4.2 s
-    faixa4 = [16:length(qq1)]'; % 4 - 1.6 s
+    faixa1 = [3:5]'; % 32 - 10.6 s
+    faixa2 = [6:9]'; % 9.1 - 7.1 s
+    faixa3 = [10:16]'; % 6.4 - 4.2 s
+    faixa4 = [17:length(qq1)]'; % 4 - 1.6 s
 
     %espectros nas 4 faixas - 32 graus
     ww55(2) = sum(qq1(faixa1)); 
